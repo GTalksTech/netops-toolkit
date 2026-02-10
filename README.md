@@ -8,12 +8,11 @@ Built and maintained by [GTalks Tech](https://gtalkstech.com).
 
 ## Who This Is For
 
-Mid-market network engineers, systems administrators, and IT operations professionals who:
+Network engineers, systems administrators, and IT operations professionals who:
 
-- Own incidents and get blamed for everything
-- Need repeatable workflows they can run under pressure
+- Need real, repeatable workflows
 - Want copy/paste templates that actually work in the real world
-- Are tired of reinventing the wheel every time something breaks
+- Are looking to free up time and use scripts and AI to augment their work, so they can focus on the things that matter!
 
 ---
 
