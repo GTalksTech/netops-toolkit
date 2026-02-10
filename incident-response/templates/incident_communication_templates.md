@@ -144,7 +144,7 @@ Layer 4 (Transport):
 ✓ [Finding] - [Evidence]
 
 Summary:
-Network connectivity and performance between [Source] and [Destination] is normal. No packet loss, latency issues, or configuration problems detected. Issue appears to be application-layer related.
+Network connectivity and performance between [Source] and [Destination] is normal. No packet loss, latency issues, or configuration problems detected. Issue appears to be application related.
 
 Recommended next steps:
 1. [Action for app/database/server team]
