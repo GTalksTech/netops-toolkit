@@ -8,6 +8,9 @@
 - External Connector (Bridge mode)
 - CML Free + WSL2 + Python 3 + Netmiko
 
+Note: These scripts use default lab credentials (admin/cisco123). 
+**Never use default credentials on production devices.**
+
 ## show_interfaces.py
 
 Connects to a single device and runs `show ip interface brief`.
