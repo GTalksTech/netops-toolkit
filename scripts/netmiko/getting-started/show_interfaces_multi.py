@@ -3,21 +3,21 @@ from netmiko import ConnectHandler
 devices = [
     {
         "device_type": "cisco_ios",
-        "host": "ip_address_goes_here",
-        "username": "users_goes_here",
-        "password": "password_goes_here",
+        "host": "192.168.1.10",
+        "username": "admin",
+        "password": "cisco123",
     },
     {
         "device_type": "cisco_ios",
-        "host": "ip_address_goes_here",
-        "username": "users_goes_here",
-        "password": "password_goes_here",
+        "host": "192.168.1.11",
+        "username": "admin",
+        "password": "cisco123",
     },
     {
         "device_type": "cisco_ios",
-        "host": "ip_address_goes_here",
-        "username": "users_goes_here",
-        "password": "password_goes_here",,
+        "host": "192.168.1.12",
+        "username": "admin",
+        "password": "cisco123",
     },
 ]
 
