@@ -2,7 +2,7 @@
 
 Practical incident response templates, troubleshooting scripts, and engineering playbooks for network and IT operations teams.
 
-Built and maintained by [GTalks Tech](https://gtalkstech.com).
+Built and maintained by [G Talks Tech](https://gtalkstech.com).
 
 ---
 
