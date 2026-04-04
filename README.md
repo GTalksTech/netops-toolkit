@@ -38,8 +38,16 @@ Practical troubleshooting runbooks for common network and infrastructure scenari
 ### scripts/powershell
 PowerShell scripts for network health checks, log analysis, and operational automation.
 
+### scripts/netmiko/quickstart-scripts
+Starter Netmiko scripts for connecting to lab devices and running show commands.
+Good first scripts to test your lab connectivity.
+
 ### scripts/python
 Python scripts for network operations, data parsing, and workflow automation.
+
+### getting-started
+Step-by-step setup guides for the tools used in this repo:
+WSL2, Python 3, Netmiko, VMware Workstation Pro, and CML Free.
 
 ### ai-prompts
 Curated AI prompt packs that turn raw logs, notes, and ticket data into clean incident updates, escalations, and post-incident summaries.
