@@ -54,6 +54,17 @@ Credentials: `admin` / `cisco123`
 - WSL2 (recommended) or any Linux/macOS terminal
 - SSH access from your workstation to all three lab devices
 
+**New to any of these?** Step-by-step setup guides are in the
+[getting-started](../../../getting-started/) folder:
+
+| Guide | What it covers |
+|-------|---------------|
+| [Install WSL2](../../../getting-started/install-wsl2.md) | Windows Subsystem for Linux setup |
+| [Install Python 3](../../../getting-started/install-python.md) | Python, pip, and virtual environments |
+| [Install Netmiko](../../../getting-started/install-netmiko.md) | The SSH automation library used by these scripts |
+| [Install VMware Workstation Pro](../../../getting-started/install-vmware.md) | Free hypervisor for running CML |
+| [Install CML Free](../../../getting-started/install-cml-free.md) | Cisco's network simulation platform |
+
 ## Quick Start
 
 ```bash
