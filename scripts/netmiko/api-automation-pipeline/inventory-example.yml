@@ -1,0 +1,30 @@
+# ============================================================
+# Device Inventory for api-doc-pipeline.py
+# ============================================================
+# Copy this file to inventory.yml and update with your devices.
+#
+# Fields:
+#   name        - Display name (used in filenames and output)
+#   host        - IP address or hostname to SSH into
+#   device_type - Netmiko device type (cisco_ios, cisco_nxos, etc.)
+#   role        - router or switch (determines which commands run)
+#
+# Netmiko device types:
+#   https://github.com/ktbyers/netmiko/blob/develop/PLATFORMS.md
+# ============================================================
+
+devices:
+  - name: core-rtr-01
+    host: 192.168.1.250
+    device_type: cisco_ios
+    role: router
+
+  - name: edge-rtr-01
+    host: 10.0.0.2
+    device_type: cisco_ios
+    role: router
+
+  - name: access-sw-01
+    host: 192.168.1.251
+    device_type: cisco_ios
+    role: switch

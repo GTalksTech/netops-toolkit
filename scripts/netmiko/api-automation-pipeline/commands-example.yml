@@ -1,0 +1,46 @@
+# ============================================================
+# Custom Commands for api-doc-pipeline.py (optional)
+# ============================================================
+# By default, the pipeline uses built-in command sets.
+# To customize, copy this file (e.g., to commands.yml) and
+# pass it with: python api-doc-pipeline.py --commands commands.yml
+#
+# Define commands per role. Devices with role "router" run the
+# router list; devices with role "switch" run the switch list.
+# ============================================================
+
+router:
+  - show version
+  - show inventory
+  - show ip interface brief
+  - show interfaces
+  - show running-config
+  - show ip route
+  - show ip protocols
+  - show ip ospf neighbor
+  - show ip ospf interface brief
+  - show ip ospf database
+  - show ip arp
+  - show cdp neighbors detail
+  - show lldp neighbors detail
+  - show ntp status
+  - show logging
+
+switch:
+  - show version
+  - show inventory
+  - show ip interface brief
+  - show interfaces
+  - show interfaces status
+  - show running-config
+  - show vlan brief
+  - show interfaces trunk
+  - show spanning-tree
+  - show mac address-table
+  - show vtp status
+  - show etherchannel summary
+  - show ip arp
+  - show cdp neighbors detail
+  - show lldp neighbors detail
+  - show ntp status
+  - show logging
