@@ -50,7 +50,7 @@ Step-by-step setup guides for the tools used in this repo:
 WSL2, Python 3, Netmiko, VMware Workstation Pro, and CML Free.
 
 ### ai-prompts
-Curated AI prompt packs that turn raw logs, notes, and ticket data into clean incident updates, escalations, and post-incident summaries.
+Curated AI prompt packs for network engineering work. Currently includes [The Network Engineer's AI Prompt Pack](ai-prompts/prompt-engineering-network-engineers/) -- 15 prompts across config generation, troubleshooting, documentation, compliance, and code generation. Every prompt tested against real lab output before release.
 
 ---
 
