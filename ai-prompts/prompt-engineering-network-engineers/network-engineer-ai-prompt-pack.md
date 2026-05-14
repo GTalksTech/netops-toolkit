@@ -1,11 +1,12 @@
 # The Network Engineer's AI Prompt Pack
 
-**Version 1.0**
+**Version 1.0.1**
 **Released:** 2026-05-12
+**Updated:** 2026-05-14
 **Author:** Garrett Masters, G Talks Tech
 **Website:** https://gtalkstech.com
 **Mailing list:** https://join.gtalkstech.com
-**GitHub:** https://github.com/GTalksTech/netops-toolkit (folder: `resources/ai-prompt-pack/`)
+**GitHub:** https://github.com/GTalksTech/netops-toolkit/tree/main/ai-prompts/prompt-engineering-network-engineers
 **Companion video:** Prompt Engineering for Network Engineers (YouTube link added at publish)
 
 15 prompts I actually use for config generation, troubleshooting, documentation, ACL review, and compliance. Some are public-safe and work on free-tier AI. Most need enterprise-tier AI because they require real configs and live device output. Read the safety section before you paste anything.
@@ -335,7 +336,7 @@ The GUI workflow for VPN tunnels is one of the slowest things in network enginee
 
 **Category:** Troubleshooting
 **Safety:** Enterprise-only (uses real interface state, neighbor data, and MTU values)
-**When to use:** OSPF neighbors are stuck in EXSTART, EXCHANGE, INIT, or 2-WAY when they should be FULL. Pull `show ip ospf neighbor` and `show ip ospf interface` from both ends, then run this.
+**When to use:** OSPF neighbors are stuck in EXSTART, EXCHANGE, INIT, or 2-WAY when they should be FULL. Pull all four of these from BOTH ends before running the prompt: `show ip ospf neighbor`, `show ip ospf interface <link>`, `show ip interface <link>`, and `show running-config interface <link>`. The first two are the obvious OSPF views. The last two are what catch IP MTU mismatches and interface-level config drift that the OSPF views can hide.
 
 ### The prompt
 
@@ -347,15 +348,24 @@ CONTEXT:
 [INSERT OUTPUT]
 - Output of `show ip ospf interface <link>` from Router A:
 [INSERT OUTPUT]
+- Output of `show ip interface <link>` from Router A:
+[INSERT OUTPUT]
+- Output of `show running-config interface <link>` from Router A:
+[INSERT OUTPUT]
 - Output of `show ip ospf neighbor` from Router B:
 [INSERT OUTPUT]
 - Output of `show ip ospf interface <link>` from Router B:
+[INSERT OUTPUT]
+- Output of `show ip interface <link>` from Router B:
+[INSERT OUTPUT]
+- Output of `show running-config interface <link>` from Router B:
 [INSERT OUTPUT]
 - Any relevant log lines from the last 10 minutes:
 [INSERT LOGS or write "none"]
 
 CONSTRAINTS:
-- Compare every parameter that must match between the two interfaces: hello/dead timers, area ID, network type, MTU (both interface MTU and OSPF MTU), authentication mode, subnet mask.
+- Compare every parameter that must match between the two interfaces: hello/dead timers, area ID, network type, IP MTU, interface MTU, authentication mode, subnet mask.
+- For IP MTU specifically, do not rely on `show ip ospf interface` alone. Pull the operational IP MTU from `show ip interface` (the "MTU is N bytes" line) AND check `show running-config interface` for an explicit `ip mtu <value>` line. An `ip mtu` override applied at the interface level can break OSPF DBD exchange without changing the link-layer MTU or appearing prominently in the OSPF view. Cite the source for the IP MTU value you report.
 - Identify which specific parameter is mismatched. State it directly.
 - Rank likely root causes from most likely to least likely. Use only data present in the inputs. Do not speculate beyond what the outputs show.
 - Do NOT recommend a remediation command yet. Diagnosis only.
@@ -363,7 +373,7 @@ CONSTRAINTS:
 
 OUTPUT FORMAT:
 1. A short diagnosis paragraph (3-5 sentences) naming the most likely root cause.
-2. A markdown table comparing all match-required parameters across Router A and Router B, with a "Match?" column (Yes/No).
+2. A markdown table comparing all match-required parameters across Router A and Router B, with a "Match?" column (Yes/No) and a "Source" column citing which show command surfaced the value.
 3. A bulleted list of next-step verification commands, in priority order.
 ```
 
@@ -373,28 +383,29 @@ This is the EP001 demo lab. `core-rtr-01` and `edge-rtr-01` are connected on Eth
 
 ### Example output (abbreviated)
 
-> The neighbor is stuck in EXCHANGE because of an IP MTU mismatch on the point-to-point link. OSPF requires equal IP MTU values on both sides for the Database Description (DBD) phase to complete. `core-rtr-01` shows IP MTU 1400 on Ethernet0/1, while `edge-rtr-01` shows IP MTU 1500. The DBD packets cannot be reassembled cleanly, so the adjacency cannot transition to LOADING or FULL.
+> The neighbor is stuck in EXCHANGE because of an IP MTU mismatch on the point-to-point link. OSPF requires equal IP MTU values on both sides for the Database Description (DBD) phase to complete. `core-rtr-01` shows `ip mtu 1400` under the Ethernet0/1 running-config, and `show ip interface Ethernet0/1` confirms an operational IP MTU of 1400. `edge-rtr-01` has no `ip mtu` override and shows the default 1500. The DBD packets cannot be reassembled cleanly, so the adjacency cannot transition to LOADING or FULL.
 
-| Parameter | core-rtr-01 | edge-rtr-01 | Match? |
-|---|---|---|---|
-| Area ID | 0.0.0.0 | 0.0.0.0 | Yes |
-| Hello timer | 10 | 10 | Yes |
-| Dead timer | 40 | 40 | Yes |
-| Network type | POINT_TO_POINT | POINT_TO_POINT | Yes |
-| IP MTU | 1400 | 1500 | **No** |
-| Authentication | MD5 | MD5 | Yes |
+| Parameter | core-rtr-01 | edge-rtr-01 | Match? | Source |
+|---|---|---|---|---|
+| Area ID | 0.0.0.0 | 0.0.0.0 | Yes | show ip ospf interface |
+| Hello timer | 10 | 10 | Yes | show ip ospf interface |
+| Dead timer | 40 | 40 | Yes | show ip ospf interface |
+| Network type | POINT_TO_POINT | POINT_TO_POINT | Yes | show ip ospf interface |
+| IP MTU | 1400 | 1500 | **No** | show ip interface + running-config `ip mtu` |
+| Authentication | MD5 | MD5 | Yes | show ip ospf interface |
 
 Verify with:
-- `show ip ospf interface Ethernet0/1 | include MTU` on both ends
-- `show ip interface Ethernet0/1 | include MTU` on both ends
-- Check whether the maintenance change set "ip mtu 1400" deliberately or as a side effect
+- `show ip interface Ethernet0/1 | include MTU` on both ends to confirm the operational IP MTU
+- `show running-config interface Ethernet0/1` on both ends to confirm whether `ip mtu` is explicitly set
+- `show ip ospf interface Ethernet0/1 | include MTU` on both ends as a secondary check
+- Check the maintenance log for an `ip mtu 1400` change made deliberately or as a side effect of a different change
 
 ### Vendor adaptation
 
-- **Arista EOS:** Same `show ip ospf neighbor` / `show ip ospf interface` output structure. The prompt works as-is.
-- **Junos:** Replace constraints reference to "show ip ospf" with "show ospf neighbor extensive" and "show ospf interface extensive". Mention areas in dotted format (`0.0.0.0`) and MTU under the `interfaces` stanza.
-- **ArubaOS-CX:** Same `show ip ospf` output structure. Works as-is.
-- **FortiOS:** Use `get router info ospf neighbor` and `get router info ospf interface`. Less verbose; you may need to also include the relevant `config router ospf` block.
+- **Arista EOS:** Same four commands work as-is (`show ip ospf neighbor`, `show ip ospf interface`, `show ip interface`, `show running-config interfaces <int>`). EOS surfaces `ip mtu` under the same name.
+- **Junos:** Replace with `show ospf neighbor extensive`, `show ospf interface extensive`, `show interfaces <int> extensive` (for operational MTU), and `show configuration interfaces <int>` (for any explicit `mtu` statement). Junos uses a single `mtu` per family rather than separate interface and IP MTU values.
+- **ArubaOS-CX:** Same four commands work with minor syntax (`show ip ospf neighbors`, `show ip ospf interface`, `show interface <int>`, `show running-config interface <int>`). ArubaOS-CX uses `ip mtu` under the L3 interface stanza.
+- **FortiOS:** Use `get router info ospf neighbor`, `get router info ospf interface`, `get system interface physical` (for the port), and `show system interface <name>` (for the config). FortiOS combines L2 and L3 MTU into a single `mtu` value per interface, so the prompt's IP MTU vs interface MTU distinction does not apply the same way.
 
 ### Why this saves time
 
@@ -1015,6 +1026,15 @@ Models trained primarily on older docs will hallucinate syntax for newly release
 ---
 
 # Changelog and Roadmap
+
+## v1.0.1 (2026-05-14)
+
+Post-release fix to Prompt 4 (OSPF Adjacency and MTU Triage).
+
+- **What was wrong.** The original CONTEXT only requested `show ip ospf neighbor` and `show ip ospf interface` from each end. During EP001 recording, an `ip mtu 1400` override on one side of a point-to-point link was not surfaced clearly by those two views, and the model did not catch the IP MTU mismatch.
+- **What changed.** CONTEXT now requires four commands per side: `show ip ospf neighbor`, `show ip ospf interface`, `show ip interface`, and `show running-config interface`. CONSTRAINTS now explicitly tell the model not to rely on `show ip ospf interface` alone for IP MTU, to pull the operational value from `show ip interface`, and to check running-config for any explicit `ip mtu` line. Output now includes a Source column citing which command surfaced each parameter.
+- **Vendor adaptation notes** for Arista EOS, Junos, ArubaOS-CX, and FortiOS updated to match.
+- **Credit.** Caught during recording when the original prompt missed the demo break. Real lab beats clever prompt every time.
 
 ## v1.0 (2026-05-12)
 Initial release.
