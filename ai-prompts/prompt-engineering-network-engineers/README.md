@@ -2,7 +2,7 @@
 
 15 prompts I actually use for network engineering work, organized into five categories and tested against real lab output before release.
 
-> **Companion video:** TODO - YouTube link will be added here once EP001 publishes. <!-- TODO-VIDEO-LINK -->
+> **Companion video:** [Prompt Engineering for Network Engineers - 4 Rules and 15 Free Prompts](https://youtu.be/OEfeS8pyn_s)
 >
 > **Mailing list:** [join.gtalkstech.com](https://join.gtalkstech.com) -- get the v1.1 update when it ships in August 2026.
 

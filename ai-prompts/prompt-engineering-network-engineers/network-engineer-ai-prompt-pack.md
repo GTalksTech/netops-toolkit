@@ -7,7 +7,7 @@
 **Website:** https://gtalkstech.com
 **Mailing list:** https://join.gtalkstech.com
 **GitHub:** https://github.com/GTalksTech/netops-toolkit/tree/main/ai-prompts/prompt-engineering-network-engineers
-**Companion video:** Prompt Engineering for Network Engineers (YouTube link added at publish)
+**Companion video:** [Prompt Engineering for Network Engineers - 4 Rules and 15 Free Prompts](https://youtu.be/OEfeS8pyn_s)
 
 15 prompts I actually use for config generation, troubleshooting, documentation, ACL review, and compliance. Some are public-safe and work on free-tier AI. Most need enterprise-tier AI because they require real configs and live device output. Read the safety section before you paste anything.
 
