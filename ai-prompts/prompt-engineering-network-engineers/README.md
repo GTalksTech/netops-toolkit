@@ -4,7 +4,7 @@
 
 > **Companion video:** [Prompt Engineering for Network Engineers - 4 Rules and 15 Free Prompts](https://youtu.be/OEfeS8pyn_s)
 >
-> **Mailing list:** [join.gtalkstech.com](https://join.gtalkstech.com) -- get the v1.2 update when it ships in August 2026.
+> **Mailing list:** [join.gtalkstech.com](https://join.gtalkstech.com) -- get the release email when the next version ships.
 
 ## Open the pack
 
@@ -49,7 +49,7 @@ The pack ends with six anti-patterns -- the places AI still gets networking wron
 
 ## Updates and feedback
 
-- **v1.1 ships August 2026.** Subscribers to [join.gtalkstech.com](https://join.gtalkstech.com) get the release email and early-access drafts.
+- Subscribers to [join.gtalkstech.com](https://join.gtalkstech.com) get the release email and early-access drafts of in-progress prompts.
 - **Want a prompt added?** Email garrett@gtalkstech.com with subject "Prompt Pack v1.x Feedback." Real-name credit in the changelog if your contribution ships (anonymous if you ask).
 
 ## License

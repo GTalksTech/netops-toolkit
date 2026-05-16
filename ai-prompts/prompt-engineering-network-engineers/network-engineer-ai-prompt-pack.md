@@ -11,7 +11,7 @@
 
 15 prompts I actually use for config generation, troubleshooting, documentation, ACL review, and compliance. Some are public-safe and work on free-tier AI. Most need enterprise-tier AI because they require real configs and live device output. Read the safety section before you paste anything.
 
-This pack is versioned and updated quarterly. v1.1 ships in August 2026. If you build a prompt you want added, email garrett@gtalkstech.com.
+This is a living pack. I'll keep adding to it as I build prompts worth keeping, and I'm hoping the community helps shape what comes next. If you build a prompt you want added, email garrett@gtalkstech.com.
 
 ---
 
@@ -1046,9 +1046,9 @@ Initial release.
 - Honest limitations section covering 6 anti-patterns.
 - Every prompt tested before release against representative inputs on Sonnet 4.6, Opus 4.7, and Gemini 2.5 Pro. The 5 highest-stakes prompts (BGP analyzer, interface counter, draw.io topology, CIS audit, drift analyzer) passed cross-model checks. All models honored the no-fabricated-CIS-control-numbers constraint and resisted inventing faults when interface counters were clean.
 
-## v1.1 (planned for 2026-08)
+## What's on the roadmap
 
-Likely additions, in priority order. Subscribers to https://join.gtalkstech.com get the v1.1 release email when it ships.
+Likely additions, in priority order. Subscribers to https://join.gtalkstech.com get the release email when the next version ships.
 
 - **Change ticket / MOP builder.** Pre-check, action, post-check, rollback structure. Vendor-neutral.
 - **Cisco ASA to PAN-OS migration helper.** Architecturally-aware (interface-to-zone mapping, policy granularity), not blind translation.
