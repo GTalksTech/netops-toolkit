@@ -4,7 +4,7 @@
 
 > **Companion video:** [Prompt Engineering for Network Engineers - 4 Rules and 15 Free Prompts](https://youtu.be/OEfeS8pyn_s)
 >
-> **Mailing list:** [join.gtalkstech.com](https://join.gtalkstech.com) -- get the v1.1 update when it ships in August 2026.
+> **Mailing list:** [join.gtalkstech.com](https://join.gtalkstech.com) -- get the v1.2 update when it ships in August 2026.
 
 ## Open the pack
 
