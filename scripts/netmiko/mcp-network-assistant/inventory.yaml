@@ -1,0 +1,18 @@
+defaults:
+  device_type: cisco_ios
+  username: admin
+  password: cisco123
+  port: 22
+
+devices:
+  core-rtr-01:
+    host: 192.168.1.250
+    description: "Core router, OSPF area 0, SNMP/syslog/ACL surface"
+
+  edge-rtr-01:
+    host: 10.0.0.2
+    description: "Edge router, OSPF area 0, reachable via core OSPF or static fallback"
+
+  access-sw-01:
+    host: 192.168.1.251
+    description: "L2 access switch with SVIs for VLAN 1/10/20/30"

@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "network-assistant": {
+      "command": "/path/to/mcp-network-assistant/.venv/Scripts/python.exe",
+      "args": [
+        "/path/to/mcp-network-assistant/server.py"
+      ]
+    }
+  }
+}
