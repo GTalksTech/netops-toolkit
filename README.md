@@ -8,7 +8,7 @@ Built and maintained by [G Talks Tech](https://gtalkstech.com). Every artifact h
 
 ## Who This Is For
 
-Senior mid-market network engineers, sysadmins, and IT operations professionals who:
+Senior network engineers, sysadmins, and IT operations professionals who:
 
 - Are good at the work and tired of doing all of it manually
 - Want copy-paste-and-adapt artifacts, not blog-post snippets
