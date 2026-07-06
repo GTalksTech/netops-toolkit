@@ -1,8 +1,18 @@
 # NetOps Toolkit
 
-Practical AI workflows, scripts, and templates for senior network and IT engineers who want to stop doing everything the hard way.
+Practical AI workflows, scripts, and templates for senior engineers who are tired of doing everything the hard way.
 
-Built and maintained by [G Talks Tech](https://gtalkstech.com). Every artifact here ships alongside a video on the [G Talks Tech YouTube channel](https://www.youtube.com/@GTalksTechOfficial) that demos it live against a real lab.
+Built and maintained by [Garrett Masters](https://gtalkstech.com) of **G Talks Tech · The AI-Augmented Engineer**. The flagship artifacts here ship alongside videos on the [YouTube channel](https://www.youtube.com/@GTalksTechOfficial) that demo them live against a real lab, with written walkthroughs on the [blog](https://gtalkstech.com/blog/).
+
+```
+$ ls ./netops-toolkit
+ai-prompts/          tested AI prompt packs for network engineering work
+scripts/netmiko/     SSH-to-artifact pipelines + a custom MCP server
+scripts/powershell/  network evidence collection on Windows endpoints
+incident-response/   comms templates for "the network is down"
+getting-started/     lab and Python environment setup, from scratch
+runbooks/            reserved: Pre-check / Action / Post-check / Rollback
+```
 
 ---
 
@@ -14,40 +24,41 @@ Senior network engineers, sysadmins, and IT operations professionals who:
 - Want copy-paste-and-adapt artifacts, not blog-post snippets
 - Want AI in the workflow without the hype, and honesty about where it still fails
 
-If you are early-career or looking for cert prep, this repo will not serve you well. The companion channel is built for engineers with 5 or more years in.
+What this is not: cert prep, beginner networking tutorials, vendor marketing, or AI hype without proof. The companion channel is built for engineers with 5 or more years in.
 
 ---
 
 ## What's Inside
 
-Organized by what the artifact does, not by which video shipped it. Each section links out to the companion video where the workflow is demoed live.
+Organized by what the artifact does, not by which video shipped it. Each entry links the companion video and write-up where they exist.
 
 ### ai-prompts
 
 Curated AI prompt packs for network engineering work. Every prompt is built on the same 4-piece structure (Role / Context / Constraint / Output Format) and carries a Public-safe or Enterprise-only safety label so you know whether it's safe to run on free-tier AI.
 
-- [The Network Engineer's AI Prompt Pack](ai-prompts/prompt-engineering-network-engineers/) — 15 prompts across config generation, troubleshooting, documentation, compliance, and code generation. Multi-vendor adaptation notes for Cisco IOS-XE, Arista EOS, Junos, ArubaOS-CX, FortiOS, and PAN-OS. ([EP001 on YouTube](https://youtu.be/OEfeS8pyn_s))
+- [The Network Engineer's AI Prompt Pack](ai-prompts/prompt-engineering-network-engineers/) · 15 prompts across config generation, troubleshooting, documentation, compliance, and code generation. Multi-vendor adaptation notes for Cisco IOS-XE, Arista EOS, Junos, ArubaOS-CX, FortiOS, and PAN-OS. ([video](https://youtu.be/OEfeS8pyn_s) · [write-up](https://gtalkstech.com/blog/prompt-engineering-for-network-engineers/))
 
 ### scripts/netmiko
 
 Production-shaped Netmiko scripts that go from SSH to a finished artifact. Each folder has its own README with lab requirements, prereqs, and a matching CML topology so you can replicate the lab and run the script as-is.
 
-- [ai-network-documentation](scripts/netmiko/ai-network-documentation/) — 5-script pipeline that turns raw show command output into AI-generated network runbooks. ([EP004 on YouTube](https://youtu.be/z89tfs7HV0I))
-- [api-automation-pipeline](scripts/netmiko/api-automation-pipeline/) — One Python script. SSH to finished runbook in a single command via direct API call. No browser, no copy-paste. ([EP005 on YouTube](https://youtu.be/LA3_eIaBM1E))
-- [quickstart-scripts](scripts/netmiko/quickstart-scripts/) — Starter scripts for connecting to a CML lab and running show commands. Use these to verify your environment before running the larger pipelines.
+- [mcp-network-assistant](scripts/netmiko/mcp-network-assistant/) · A from-scratch FastMCP + Netmiko server that gives Claude read-only SSH access to your lab. Ask "something's off with OSPF on my network" in plain English and get a diagnosis from live device output. ([video](https://youtu.be/LZrmRdSMiJ0) · [write-up](https://gtalkstech.com/blog/mcp-network-assistant/))
+- [ai-network-documentation](scripts/netmiko/ai-network-documentation/) · 5-script pipeline that turns raw show command output into AI-generated network runbooks. ([video](https://youtu.be/z89tfs7HV0I) · [write-up](https://gtalkstech.com/blog/ai-network-documentation/))
+- [api-automation-pipeline](scripts/netmiko/api-automation-pipeline/) · One Python script. SSH to finished runbook in a single command via direct API call. No browser, no copy-paste. ([video](https://youtu.be/LA3_eIaBM1E) · [write-up](https://gtalkstech.com/blog/api-automation-pipeline/))
+- [quickstart-scripts](scripts/netmiko/quickstart-scripts/) · Starter scripts for connecting to a CML lab and running show commands. Use these to verify your environment before running the larger pipelines.
 
 ### scripts/powershell
 
 PowerShell scripts for network evidence collection and triage on Windows endpoints.
 
-- `Get-NetworkEvidence.ps1` — One-shot evidence collector. Captures DNS, ARP, route table, ping, traceroute, and TCP socket state in a single bundle ready to paste into a ticket.
+- `Get-NetworkEvidence.ps1` · One-shot evidence collector. Captures DNS, ARP, route table, ping, traceroute, and TCP socket state in a single bundle ready to paste into a ticket.
 
 ### incident-response
 
 Communication and evidence artifacts for the moment a ticket comes in saying "the network is down."
 
-- [templates](incident-response/templates/) — Communication templates for initial notification, leadership updates, vendor and ISP escalation, post-incident summaries, and quick replies to "any update?" pings.
-- checklists — Evidence collection checklists for network triage. (Stub. First entries arrive with the Prove It's Not the Network series.)
+- [templates](incident-response/templates/) · Communication templates for initial notification, leadership updates, vendor and ISP escalation, post-incident summaries, and quick replies to "any update?" pings. Companion to the triage method in [It's Not the Network](https://gtalkstech.com/blog/its-not-the-network/). ([video](https://youtu.be/kdyXSark_ck))
+- checklists · Evidence collection checklists for network triage. (Stub. First entries arrive with the Prove It's Not the Network series.)
 
 ### getting-started
 
@@ -78,7 +89,7 @@ Everything in this repo maps to one of four pillars on the G Talks Tech channel:
 - **AI-Powered Workflows.** Daily engineering tasks accelerated by AI. Prompt packs, AI-generated documentation, AI-assisted troubleshooting.
 - **Prove It's Not the Network.** Triage workflows, evidence collection, and incident communication for the calls that start with "the network is broken."
 - **Automation for Non-Developers.** Netmiko, Ansible, and Nornir starter scripts for engineers who think in CLI rather than IDE.
-- **Senior Engineer OS.** Runbooks, documentation discipline, and the systems senior engineers build to stop firefighting and start operating at their title.
+- **The Senior Engineer Operating System.** Runbooks, documentation discipline, and the systems senior engineers build to stop firefighting and start operating at their title.
 
 ---
 
@@ -87,8 +98,8 @@ Everything in this repo maps to one of four pillars on the G Talks Tech channel:
 - Website: [gtalkstech.com](https://gtalkstech.com)
 - Blog: [gtalkstech.com/blog](https://gtalkstech.com/blog)
 - YouTube: [G Talks Tech](https://www.youtube.com/@GTalksTechOfficial)
-- Mailing list: [join.gtalkstech.com](https://join.gtalkstech.com)
-- LinkedIn: [Garrett Masters](https://www.linkedin.com/in/garrett-masters-ba6234101)
+- Mailing list: [join.gtalkstech.com](https://join.gtalkstech.com) · free prompt pack + release emails when new artifacts ship
+- LinkedIn: [Garrett Masters](https://www.linkedin.com/in/garrett-masters-ba6234101/)
 - Instagram: [@gtalkstechofficial](https://www.instagram.com/gtalkstechofficial/)
 - X: [@gtalkstech](https://x.com/gtalkstech)
 - Email: garrett@gtalkstech.com
