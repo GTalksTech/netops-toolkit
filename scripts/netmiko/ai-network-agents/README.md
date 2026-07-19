@@ -5,7 +5,7 @@ network tools that audits a live lab, finds a real CVE by checking running
 configs against Cisco's live PSIRT API, writes the fix, and then gets stopped
 by a server-side boundary until a named human approves the change.
 
-**Video:** (video link coming with the companion episode)
+**Video:** [My Network AI Agent Found a CVE. It Can't Touch Prod Without Me.](https://youtu.be/dbkwtuXuPPQ)
 
 ## Where the code lives
 
