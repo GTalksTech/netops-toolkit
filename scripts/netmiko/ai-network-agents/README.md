@@ -40,8 +40,12 @@ filters the front door; the core offers an unfiltered side path. Only reading
 both configs together exposes it, which is exactly the kind of finding the
 agent is for.
 
-A ready-to-import CML topology YAML for the extended lab is coming; until then
-the base YAML plus the table above is enough to rebuild it.
+[`cml-topology.yaml`](cml-topology.yaml) in this folder is the ready-to-import
+extended lab with the device configs embedded, pulled from the validated lab
+itself. Import it into CML, start the nodes, and the staged findings are live.
+Device and console credentials are the standard public lab set. The two Linux
+endpoints (test client and HTTP server) boot unconfigured; their two-line
+setup is shown in the video.
 
 ## Prereqs
 

@@ -1,0 +1,946 @@
+annotations:
+  - border_color: '#808080FF'
+    border_style: ''
+    color: '#FFFFFFFF'
+    line_end: null
+    line_start: null
+    thickness: 1
+    type: line
+    x1: -480.0
+    y1: -600.0
+    x2: -480.0
+    y2: -600.0
+    z_index: 0
+smart_annotations: []
+nodes:
+  - boot_disk_size: null
+    configuration:
+      - name: ios_config.txt
+        content: |-
+          !
+          ! Last configuration change at 17:31:16 UTC Fri Jul 17 2026 by admin
+          ! NVRAM config last updated at 06:29:29 UTC Sun Jul 19 2026 by admin
+          !
+          version 17.16
+          service timestamps debug datetime msec
+          service timestamps log datetime msec
+          !
+          hostname access-sw-01
+          !
+          boot-start-marker
+          boot-end-marker
+          !
+          !
+          no logging console
+          no aaa new-model
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          ip audit notify log
+          ip audit po max-events 100
+          no ip domain lookup
+          ip domain name lab.local
+          ip cef
+          login on-success log
+          no ipv6 cef
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          crypto pki trustpoint TP-self-signed-131184641
+           enrollment selfsigned
+           subject-name cn=IOS-Self-Signed-Certificate-131184641
+           revocation-check none
+           rsakeypair TP-self-signed-131184641
+           hash sha512
+          !
+          !
+          crypto pki certificate chain TP-self-signed-131184641
+           certificate self-signed 01
+            3082032E 30820216 A0030201 02020101 300D0609 2A864886 F70D0101 0D050030
+            30312E30 2C060355 04030C25 494F532D 53656C66 2D536967 6E65642D 43657274
+            69666963 6174652D 31333131 38343634 31301E17 0D323630 33303731 36353330
+            385A170D 33363033 30363136 35333038 5A303031 2E302C06 03550403 0C25494F
+            532D5365 6C662D53 69676E65 642D4365 72746966 69636174 652D3133 31313834
+            36343130 82012230 0D06092A 864886F7 0D010101 05000382 010F0030 82010A02
+            82010100 9A94C730 E9EB35BA 052009D9 BBC5665B 9F04AC79 EAF9E469 8BEC33E0
+            0DA840A3 B0536BB3 F298F64C 063AC943 6A9E6DFA 40F0A8B7 EC9632CE D861C392
+            E6463D98 0E48B079 5C81C552 35D9BC69 F3526465 C9DD7F11 BC72B160 595D6E31
+            0C076C56 9CC0F72A 85FB0DCA 41C58F5C 8C6366B5 4990B6CA 7491DD99 11EE32BF
+            5D7F38FD D291A6A6 9CD60021 FD7979E5 D2DE79AF 2541196F BD9E6A22 F420B601
+            4506E309 14368828 9E8F2482 54FD4599 27C448EE 0B208332 6EFB3F16 8A5B5FF0
+            A6E05C4B 2E1745EF 9EDA6FE9 486644E8 C93A871A 4D11E17F 6181B937 A6BC2168
+            E3B1A93A D0A05889 50BF8224 C3CF985C 0DC69AF3 257F7E38 2DF87937 EAA16D03
+            58DF40DB 02030100 01A35330 51301D06 03551D0E 04160414 0B986E1C 2219AFF3
+            F54FD1A4 C52C9159 CA91F0A7 301F0603 551D2304 18301680 140B986E 1C2219AF
+            F3F54FD1 A4C52C91 59CA91F0 A7300F06 03551D13 0101FF04 05300301 01FF300D
+            06092A86 4886F70D 01010D05 00038201 01004650 99FA9075 ACDF5CC1 0DC62BDF
+            D6C150DA C552B1C7 C99BEFFB E56225B9 E403DACC A6FF60BC 92A92717 59B0EC17
+            85C8BBF8 574F4A9F AA167054 BC6980FA 31F64DF0 EF5432C4 1F941F66 EE3EC45C
+            675B0BE9 4752D01F 03C9D5E6 74012094 E7537BDD D48837A8 5B7BB507 E2457FAE
+            8784A879 2889312F 3CED937A 6E4CFFAB C18F4D90 AAFDE9AB 31FEF314 B42A0444
+            CFAC47BB C982E586 EC8E60FC 4C837EF4 8D9F296E FBB6F9CB 04E203D6 9B35A873
+            22CF4FB1 995B7E80 22FE89C1 ED26CADC 008CB750 0EF75941 6FD93C79 CA0A1439
+            C1305913 6C5E63E9 69BD664F 23205156 28029BF9 2BC04288 5D04C5C2 3846B48E
+            F85A2CBD 8F64FD6F 037BAB22 C2F21C9E 2987
+            	quit
+          !
+          !
+          memory free low-watermark processor 79497
+          !
+          !
+          spanning-tree mode rapid-pvst
+          spanning-tree extend system-id
+          enable secret 9 $9$vm.TKc09Yc.lN.$QbLBqLLRcTm9kIv8gJDxzpk0L6rs2pHZ1vvVQKY4IDk
+          !
+          username admin privilege 15 secret 9 $9$IbVCNrbo6/iIZ.$8/I5t9qRUsm01Mu6qmIyK7WBLhhe9J08dKQz4NMGqFg
+          !
+          vlan internal allocation policy ascending
+          !
+          lldp run
+          !
+          !
+          !
+          !
+          interface Ethernet0/0
+           description Uplink to core-rtr-01 E0/0
+           switchport trunk encapsulation dot1q
+           switchport trunk allowed vlan 1,10,20,30
+           switchport mode trunk
+          !
+          interface Ethernet0/1
+           description Access -- Users VLAN 20
+           switchport access vlan 20
+           switchport mode access
+          !
+          interface Ethernet0/2
+           description Access -- Servers VLAN 30
+           switchport access vlan 30
+           switchport mode access
+          !
+          interface Ethernet0/3
+           description Access -- Management VLAN 10
+           switchport access vlan 10
+           switchport mode access
+          !
+          interface Ethernet1/0
+           description Uplink to ExternalCon
+           switchport mode access
+          !
+          interface Ethernet1/1
+          !
+          interface Ethernet1/2
+          !
+          interface Ethernet1/3
+          !
+          interface Vlan1
+           description Management Network -- 192.168.1.0/24
+           ip address 192.168.1.251 255.255.255.0
+          !
+          interface Vlan10
+           description Management VLAN -- 10.10.10.0/24
+           ip address 10.10.10.1 255.255.255.0
+          !
+          interface Vlan20
+           description Users VLAN -- 10.10.20.0/24
+           ip address 10.10.20.1 255.255.255.0
+          !
+          interface Vlan30
+           description Servers VLAN -- 10.10.30.0/24
+           ip address 10.10.30.1 255.255.255.0
+          !
+          ip default-gateway 192.168.1.1
+          ip forward-protocol nd
+          ip forward-protocol udp
+          !
+          !
+          ip http server
+          ip http secure-server
+          ip ssh bulk-mode 131072
+          ip route 0.0.0.0 0.0.0.0 172.16.100.1
+          ip route 0.0.0.0 0.0.0.0 192.168.1.200
+          ip route 0.0.0.0 0.0.0.0 192.168.1.250
+          ip route 172.16.99.0 255.255.255.0 192.168.1.250
+          !
+          no logging btrace
+          !
+          !
+          !
+          control-plane
+          !
+          !
+          !
+          line con 0
+           exec-timeout 480 0
+           logging synchronous
+           login local
+          line aux 0
+          line vty 0 4
+           exec-timeout 480 0
+           login local
+           transport input ssh
+          !
+          ntp server 192.168.1.250
+          !
+          end
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n0
+    image_definition: null
+    label: access-sw-01
+    node_definition: ioll2-xe
+    parameters: {}
+    priority: null
+    pyats:
+      username: null
+      password: null
+      enable_password: null
+    ram: null
+    tags: []
+    x: -200
+    y: -400
+    interfaces:
+      - id: i0
+        label: Loopback0
+        mac_address: null
+        type: loopback
+      - id: i1
+        label: Ethernet0/0
+        mac_address: null
+        type: physical
+        slot: 0
+      - id: i2
+        label: Ethernet0/1
+        mac_address: null
+        type: physical
+        slot: 1
+      - id: i3
+        label: Ethernet0/2
+        mac_address: null
+        type: physical
+        slot: 2
+      - id: i4
+        label: Ethernet0/3
+        mac_address: null
+        type: physical
+        slot: 3
+      - id: i5
+        label: Ethernet1/0
+        mac_address: null
+        type: physical
+        slot: 4
+  - boot_disk_size: null
+    configuration:
+      - name: ios_config.txt
+        content: |-
+          !
+          ! Last configuration change at 17:23:19 UTC Sat Jul 18 2026 by admin
+          ! NVRAM config last updated at 06:29:23 UTC Sun Jul 19 2026 by admin
+          !
+          version 17.16
+          service timestamps debug datetime msec
+          service timestamps log datetime msec
+          service password-encryption
+          !
+          hostname core-rtr-01
+          !
+          boot-start-marker
+          boot-end-marker
+          !
+          !
+          no logging console
+          no aaa new-model
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          no ip domain lookup
+          ip domain name lab.local
+          ip cef
+          login on-success log
+          no ipv6 cef
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          crypto pki trustpoint TP-self-signed-131184642
+           enrollment selfsigned
+           subject-name cn=IOS-Self-Signed-Certificate-131184642
+           revocation-check none
+           rsakeypair TP-self-signed-131184642
+           hash sha512
+          !
+          !
+          crypto pki certificate chain TP-self-signed-131184642
+           certificate self-signed 01
+            3082032E 30820216 A0030201 02020101 300D0609 2A864886 F70D0101 0D050030
+            30312E30 2C060355 04030C25 494F532D 53656C66 2D536967 6E65642D 43657274
+            69666963 6174652D 31333131 38343634 32301E17 0D323630 32323131 34353531
+            305A170D 33363032 32313134 35353130 5A303031 2E302C06 03550403 0C25494F
+            532D5365 6C662D53 69676E65 642D4365 72746966 69636174 652D3133 31313834
+            36343230 82012230 0D06092A 864886F7 0D010101 05000382 010F0030 82010A02
+            82010100 C78DF4DF 92F46C35 46F6CAD3 FBD222A3 87F5E3B9 3F725168 50F3F1FA
+            367D0EB0 D2252464 1A480AD3 7781E9D8 73EECDCC F67A464F CAC29349 7E5B4602
+            A9E2464B 1CE90C64 717A6B5B 2F00A881 E6E92B3A 1E9396C7 3677DF97 BA421408
+            2A74398D 3E658A57 A60762F7 287DD35A D8A1DC73 57E64706 AD7EB05D 2EE97A51
+            EDA7ED47 E0715A6C 4EBC9248 FFBAFC7B B14B13F2 4123ACBE 6722A7DA AB5ADA39
+            5FF76E65 181EA71E 71ADE921 D9E36D45 E11651FC A2B91221 40E09577 EA1F1D1E
+            5DA6F85D 7C0FB543 896B6C79 B6FB3AD1 E830C622 A43DACF4 47864411 BF2B0AD9
+            E5F23918 C2C120F7 0C5D0DEB 13382121 FD164C22 85D8DC54 B3E8E96B 585C2202
+            6EA43095 02030100 01A35330 51301D06 03551D0E 04160414 098DBE3B EB2B8833
+            D778F054 195105EE A7645A8A 301F0603 551D2304 18301680 14098DBE 3BEB2B88
+            33D778F0 54195105 EEA7645A 8A300F06 03551D13 0101FF04 05300301 01FF300D
+            06092A86 4886F70D 01010D05 00038201 0100308B A1195E12 CB2E710B 9D704D9B
+            AD9E8449 CFC6F58F EF710CA9 1B9E3F07 43DB79C3 80E06290 DBB0F2F4 12106F6E
+            9079F6D1 16AC97DD BA31FA8F 19631703 F6C58E5A D7309361 4E2AC1B5 CA6A0F28
+            8187C343 BC9AF899 C2ADC814 C2E970A4 AA5BEA5D 2EB3FA8A DA2AA662 4B381CA0
+            B908F346 A583DE49 504BE818 BF8081DD D40E3C45 28BD1686 8B039CBA 27789BFA
+            C415C9EE C93E0D2F B0BA24E4 F13B3E09 EB5A8BBA 7E53C313 F34B6D55 B5914288
+            E13E243C 46F794C1 A2CABB08 8AB6A979 ACE57022 24E88DCB 07935204 CC705CC4
+            F80C9339 6F80FE88 FCE5AAB6 5151CC91 F99D3302 B945FE7C 32657190 87C6726A
+            F8847B32 203F9EB5 963B0433 AB61BF46 4E71
+            	quit
+          !
+          !
+          memory free low-watermark processor 79983
+          !
+          !
+          spanning-tree mode rapid-pvst
+          !
+          enable secret 9 $9$cTJu6gD73.OWz.$S12Vo2TUQP2E3V0HaJWT11G6/pMXKT4/n6te7Ga5CIw
+          !
+          username admin privilege 15 secret 9 $9$vtTvuWjY0a/w.E$tG6TgUMrSaF8.WB.FeIZtcmtMhk7/vTMh0Dm7qiaEA.
+          !
+          !
+          !
+          !
+          !
+          lldp run
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          interface Loopback0
+           description Router-ID -- core-rtr-01
+           ip address 10.0.0.1 255.255.255.255
+          !
+          interface Ethernet0/0
+           description LAN -- Link to access-sw-01 E0/0
+           ip address 192.168.1.250 255.255.255.0
+          !
+          interface Ethernet0/1
+           description WAN -- Link to edge-rtr-01 E0/0
+           ip address 10.0.12.2 255.255.255.252
+           ip ospf authentication message-digest
+           ip ospf message-digest-key 1 md5 7 045802150C2E1D1C5A
+           ip ospf network point-to-point
+          !
+          interface Ethernet0/2
+           ip address 172.16.99.2 255.255.255.0
+          !
+          interface Ethernet0/3
+           no ip address
+           shutdown
+          !
+          router ospf 1
+           router-id 10.0.0.1
+           passive-interface default
+           no passive-interface Ethernet0/1
+           network 10.0.0.1 0.0.0.0 area 0
+           network 10.0.12.0 0.0.0.3 area 0
+           network 192.168.1.0 0.0.0.255 area 0
+          !
+          ip forward-protocol nd
+          ip forward-protocol udp
+          !
+          !
+          no ip http server
+          no ip http secure-server
+          ip route 10.0.0.2 255.255.255.255 10.0.12.1
+          ip route 10.10.30.0 255.255.255.0 192.168.1.251
+          ip ssh bulk-mode 131072
+          ip ssh time-out 60
+          !
+          ip access-list extended WEB_TRAFFIC
+           10 permit tcp any any eq www
+           20 permit tcp any any eq 443
+           30 deny ip any any log
+          no logging btrace
+          logging host 192.168.1.10
+          !
+          snmp-server community public RO
+          !
+          !
+          control-plane
+          !
+          !
+          !
+          line con 0
+           exec-timeout 480 0
+           logging synchronous
+           login local
+          line aux 0
+          line vty 0 4
+           exec-timeout 480 0
+           login local
+           transport input ssh
+          !
+          ntp master 1
+          !
+          !
+          !
+          end
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n1
+    image_definition: null
+    label: core-rtr-01
+    node_definition: iol-xe
+    parameters: {}
+    priority: null
+    pyats:
+      username: null
+      password: null
+      enable_password: null
+    ram: null
+    tags: []
+    x: -200
+    y: -600
+    interfaces:
+      - id: i0
+        label: Loopback0
+        mac_address: null
+        type: loopback
+      - id: i1
+        label: Ethernet0/0
+        mac_address: null
+        type: physical
+        slot: 0
+      - id: i2
+        label: Ethernet0/1
+        mac_address: null
+        type: physical
+        slot: 1
+      - id: i3
+        label: Ethernet0/2
+        mac_address: null
+        type: physical
+        slot: 2
+      - id: i4
+        label: Ethernet0/3
+        mac_address: null
+        type: physical
+        slot: 3
+  - boot_disk_size: null
+    configuration:
+      - name: ios_config.txt
+        content: |-
+          !
+          ! Last configuration change at 17:39:19 UTC Fri Jul 17 2026 by admin
+          ! NVRAM config last updated at 06:29:16 UTC Sun Jul 19 2026 by admin
+          !
+          version 17.16
+          service timestamps debug datetime msec
+          service timestamps log datetime msec
+          service password-encryption
+          !
+          hostname edge-rtr-01
+          !
+          boot-start-marker
+          boot-end-marker
+          !
+          !
+          no logging console
+          no aaa new-model
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          no ip domain lookup
+          ip domain name lab.local
+          ip cef
+          login on-success log
+          no ipv6 cef
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          crypto pki trustpoint TP-self-signed-131184643
+           enrollment selfsigned
+           subject-name cn=IOS-Self-Signed-Certificate-131184643
+           revocation-check none
+           rsakeypair TP-self-signed-131184643
+           hash sha512
+          !
+          !
+          crypto pki certificate chain TP-self-signed-131184643
+           certificate self-signed 01
+            3082032E 30820216 A0030201 02020101 300D0609 2A864886 F70D0101 0D050030
+            30312E30 2C060355 04030C25 494F532D 53656C66 2D536967 6E65642D 43657274
+            69666963 6174652D 31333131 38343634 33301E17 0D323630 33303831 37313734
+            335A170D 33363033 30373137 31373433 5A303031 2E302C06 03550403 0C25494F
+            532D5365 6C662D53 69676E65 642D4365 72746966 69636174 652D3133 31313834
+            36343330 82012230 0D06092A 864886F7 0D010101 05000382 010F0030 82010A02
+            82010100 C45606D2 020806CF 29424101 6504595D F996C99A 13F30A85 F268A25D
+            9F6B4186 CE91A3E6 DA994B5C 167BD821 0F7ADB45 6C76117D 5A7C1E3B C5E7C9CC
+            0EEDEB67 FC818E01 F0263C61 96C6A8E6 01A82527 DC836FA6 09C7CC83 A5BDA9E0
+            5C6094E8 6A0C6A9E 035A6A54 19308F91 D0FFFBB5 14A98000 AC98ABD8 7C534DFD
+            4F1D24DC D3C0F1D1 8C7A8DD1 D1939F00 F2368B9B 21337CD2 64B04D88 10CF0285
+            33A33CDD 172C44EB 73DAC437 6DB73B01 3628C1E4 B63F6936 7EDE2D24 B7E1821C
+            6A314AFA E60128C8 388F9F9E D6EB2CC2 0970A846 CD46C323 D7EA68C5 D69AD265
+            0BB94302 0D3250FD 2E9251D6 7E9042DA DE6D6948 9ACEBBB6 6EBC1AEF D495DE75
+            1C9A3927 02030100 01A35330 51301D06 03551D0E 04160414 46B8425F 790F5AC1
+            B26551C1 FB316C58 214ECDAE 301F0603 551D2304 18301680 1446B842 5F790F5A
+            C1B26551 C1FB316C 58214ECD AE300F06 03551D13 0101FF04 05300301 01FF300D
+            06092A86 4886F70D 01010D05 00038201 0100A002 AAD233C4 FFF20B9D 4D4E7583
+            3244070D 605F55A1 355E3FE3 E21D1593 790DAD8E 1EAFFA7B 84A1E995 BFA31329
+            9E33557E DE8C76BD CF51754D 7E2C73CC 0703E051 B8DA5FDA 96C3192C 002C938F
+            F79EAEEA B54AB011 09579BFE 25626673 EDCCD741 5817C8A6 BCC4349F B55357EE
+            1DDC6A34 DE550087 FDE3B5E4 C629F972 048BD48D B067C4D0 80752B2D 2FA152FD
+            C766A2F9 07CCC87E A6D62A55 A5CFC323 D1F06E80 4CDDD504 FA51A933 2D43FABD
+            AD0702EB 9071B104 57A4252E 25E20417 16DC3A0E D6D948AC BD8BD513 EF4AE886
+            2D41064A D6925F5E 740DE97E A6B27691 5C329046 7C35D797 20AD0A08 E5D00481
+            CA8A0362 D4EBBE93 CE7982D4 BF97773C 7E23
+            	quit
+          !
+          !
+          memory free low-watermark processor 79983
+          !
+          !
+          spanning-tree mode rapid-pvst
+          !
+          enable secret 9 $9$cYP7WFMIJsWKfE$26b4s4nFbnE.Fj4bZW1BW2I78VeZ02P54Bc4hDy/9Jc
+          !
+          username admin privilege 15 secret 9 $9$58.Gs2Mzmb25r.$9ryBv02VdVgxhX7DHMAbtYvnkGnU63FZ.UrfxMfF.K2
+          !
+          !
+          !
+          !
+          !
+          lldp run
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          !
+          interface Loopback0
+           description Router-ID -- edge-rtr-01
+           ip address 10.0.0.2 255.255.255.255
+          !
+          interface Ethernet0/0
+           description WAN -- Link to core-rtr-01 E0/1
+           ip address 10.0.12.1 255.255.255.252
+           ip ospf authentication message-digest
+           ip ospf message-digest-key 1 md5 7 14141B180F0B7B7977
+           ip ospf network point-to-point
+           ip ospf hello-interval 30
+          !
+          interface Ethernet0/1
+           ip address 172.16.99.1 255.255.255.0
+           ip access-group PROTECT_SERVERS in
+          !
+          interface Ethernet0/2
+           no ip address
+           shutdown
+          !
+          interface Ethernet0/3
+           no ip address
+           shutdown
+          !
+          router ospf 1
+           router-id 10.0.0.2
+           passive-interface default
+           no passive-interface Ethernet0/0
+           network 10.0.0.2 0.0.0.0 area 0
+           network 10.0.12.0 0.0.0.3 area 0
+          !
+          ip forward-protocol nd
+          ip forward-protocol udp
+          !
+          !
+          ip http server
+          ip http secure-server
+          ip route 10.10.30.0 255.255.255.0 10.0.12.2
+          ip route 192.168.1.0 255.255.255.0 10.0.12.2
+          ip ssh bulk-mode 131072
+          ip ssh time-out 60
+          !
+          ip access-list extended PROTECT_SERVERS
+           10 permit tcp any 10.10.30.0 0.0.0.255 eq www
+           20 deny ip any 10.10.30.0 0.0.0.255
+           30 permit ip any any
+          no logging btrace
+          !
+          !
+          !
+          control-plane
+          !
+          !
+          !
+          line con 0
+           exec-timeout 480 0
+           logging synchronous
+           login local
+          line aux 0
+          line vty 0 4
+           exec-timeout 480 0
+           login local
+           transport input ssh
+          !
+          ntp server 192.168.1.250
+          !
+          !
+          !
+          end
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n2
+    image_definition: null
+    label: edge-rtr-01
+    node_definition: iol-xe
+    parameters: {}
+    priority: null
+    pyats:
+      username: null
+      password: null
+      enable_password: null
+    ram: null
+    tags: []
+    x: -520
+    y: -600
+    interfaces:
+      - id: i0
+        label: Loopback0
+        mac_address: null
+        type: loopback
+      - id: i1
+        label: Ethernet0/0
+        mac_address: null
+        type: physical
+        slot: 0
+      - id: i2
+        label: Ethernet0/1
+        mac_address: null
+        type: physical
+        slot: 1
+      - id: i3
+        label: Ethernet0/2
+        mac_address: null
+        type: physical
+        slot: 2
+      - id: i4
+        label: Ethernet0/3
+        mac_address: null
+        type: physical
+        slot: 3
+  - boot_disk_size: null
+    configuration:
+      - name: default
+        content: System Bridge
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: true
+    id: n3
+    image_definition: null
+    label: ExternalCon
+    node_definition: external_connector
+    parameters: {}
+    priority: null
+    pyats:
+      username: null
+      password: null
+      enable_password: null
+    ram: null
+    tags: []
+    x: 120
+    y: -400
+    interfaces:
+      - id: i0
+        label: port
+        mac_address: null
+        type: physical
+        slot: 0
+  - boot_disk_size: null
+    configuration: []
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n4
+    image_definition: null
+    label: untrusted-sw
+    node_definition: unmanaged_switch
+    parameters: {}
+    priority: null
+    pyats:
+      username: null
+      password: null
+      enable_password: null
+    ram: null
+    tags: []
+    x: -360
+    y: -760
+    interfaces:
+      - id: i0
+        label: port0
+        mac_address: null
+        type: physical
+        slot: 0
+      - id: i1
+        label: port1
+        mac_address: null
+        type: physical
+        slot: 1
+      - id: i2
+        label: port2
+        mac_address: null
+        type: physical
+        slot: 2
+      - id: i3
+        label: port3
+        mac_address: null
+        type: physical
+        slot: 3
+      - id: i4
+        label: port4
+        mac_address: null
+        type: physical
+        slot: 4
+      - id: i5
+        label: port5
+        mac_address: null
+        type: physical
+        slot: 5
+      - id: i6
+        label: port6
+        mac_address: null
+        type: physical
+        slot: 6
+      - id: i7
+        label: port7
+        mac_address: null
+        type: physical
+        slot: 7
+  - boot_disk_size: null
+    configuration:
+      - name: boot.sh
+        content: |-
+          # insert more commands here
+          # ip address add dev eth1 10.0.0.1/24
+          # ip link set dev eth1 up
+          #
+          # keep the next line to indicate that the machine is ready
+          ip addr add 172.16.99.10/24 dev eth0
+          ip route add default via 172.16.99.1
+          echo "READY" >/dev/console
+          cat /etc/motd
+          exit 0
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n5
+    image_definition: net-tools-2-10-1-3
+    label: ATTACKER IS BAD
+    node_definition: net-tools
+    parameters: {}
+    priority: null
+    pyats:
+      username: null
+      password: null
+      enable_password: null
+    ram: null
+    tags: []
+    x: -360
+    y: -920
+    interfaces:
+      - id: i0
+        label: eth0
+        mac_address: null
+        type: physical
+        slot: 0
+      - id: i1
+        label: eth1
+        mac_address: null
+        type: physical
+        slot: 1
+      - id: i2
+        label: eth2
+        mac_address: null
+        type: physical
+        slot: 2
+      - id: i3
+        label: eth3
+        mac_address: null
+        type: physical
+        slot: 3
+  - boot_disk_size: null
+    configuration:
+      - name: boot.sh
+        content: |-
+          # Insert more commands here
+          # ip address add dev eth1 10.0.0.1/24
+          # ip link set dev eth1 up
+          #
+          # keep the next line to indicate that the machine is ready
+          ip addr add 10.10.30.10/24 dev eth0
+          ip route add default via 10.10.30.1
+          echo "READY" >/dev/console
+          exit 0
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n6
+    image_definition: nginx-1-31-2
+    label: Web Server
+    node_definition: nginx
+    parameters: {}
+    priority: null
+    pyats:
+      username: null
+      password: null
+      enable_password: null
+    ram: null
+    tags: []
+    x: -200
+    y: -200
+    interfaces:
+      - id: i0
+        label: eth0
+        mac_address: null
+        type: physical
+        slot: 0
+links:
+  - id: l0
+    n1: n1
+    n2: n0
+    i1: i1
+    i2: i1
+    conditioning: {}
+    label: Router1-Ethernet0/0<->Switch1-Ethernet0/0
+  - id: l1
+    n1: n0
+    n2: n3
+    i1: i5
+    i2: i0
+    conditioning: {}
+    label: Switch1-Ethernet1/0<->ExternalCon-port
+  - id: l2
+    n1: n2
+    n2: n1
+    i1: i1
+    i2: i2
+    conditioning: {}
+    label: edge-rtr-01-Ethernet0/0<->core-rtr-01-Ethernet0/1
+  - id: l3
+    n1: n5
+    n2: n4
+    i1: i0
+    i2: i0
+    conditioning: {}
+    label: net-tools-0-eth0<->untrusted-sw-port0
+  - id: l4
+    n1: n4
+    n2: n2
+    i1: i1
+    i2: i2
+    conditioning: {}
+    label: untrusted-sw-port1<->edge-rtr-01-Ethernet0/1
+  - id: l5
+    n1: n4
+    n2: n1
+    i1: i2
+    i2: i3
+    conditioning: {}
+    label: untrusted-sw-port2<->core-rtr-01-Ethernet0/2
+  - id: l6
+    n1: n6
+    n2: n0
+    i1: i0
+    i2: i3
+    conditioning: {}
+    label: nginx-0-eth0<->access-sw-01-Ethernet0/2
+lab:
+  description: ''
+  notes: ''
+  title: NetMiko-Lab
+  node_staging:
+    enabled: false
+    start_remaining: true
+    abort_on_failure: false
+  version: 0.3.1
