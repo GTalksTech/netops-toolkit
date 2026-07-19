@@ -43,9 +43,10 @@ agent is for.
 [`cml-topology.yaml`](cml-topology.yaml) in this folder is the ready-to-import
 extended lab with the device configs embedded, pulled from the validated lab
 itself. Import it into CML, start the nodes, and the staged findings are live.
-Device and console credentials are the standard public lab set. The two Linux
-endpoints (test client and HTTP server) boot unconfigured; their two-line
-setup is shown in the video.
+Device and console credentials are the standard public lab set. All seven nodes
+carry their configs in the import, including the two Linux endpoints: the
+net-tools attacker (172.16.99.10) and the nginx server (10.10.30.10) bring up
+their addressing from an embedded boot script, and nginx serves on port 80.
 
 ## Prereqs
 
