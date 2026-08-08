@@ -1,0 +1,54 @@
+name: Workflow or artifact request
+description: Suggest a script, prompt pack, runbook, or workflow you would actually use.
+title: "[Request] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The most useful requests describe a real task you do by hand today. Those are
+        the ones that turn into videos.
+
+        This is a public repo. Keep the description generic enough that nothing
+        specific to your employer's environment ends up in it.
+  - type: textarea
+    id: what
+    attributes:
+      label: What would you like to see
+    validations:
+      required: true
+  - type: textarea
+    id: manual-today
+    attributes:
+      label: How do you handle this today
+      description: What is the manual version you are trying to replace, how long does it take, and how often do you do it?
+    validations:
+      required: true
+  - type: dropdown
+    id: pillar
+    attributes:
+      label: Closest fit
+      description: Which part of the channel does this belong to?
+      options:
+        - AI-Powered Workflows
+        - "Prove It's Not the Network: triage, evidence, incident comms"
+        - "Automation for Non-Developers: Netmiko, Ansible, Nornir"
+        - "The Senior Engineer Operating System: runbooks, documentation"
+        - Not sure
+    validations:
+      required: true
+  - type: input
+    id: vendors
+    attributes:
+      label: Vendors or platforms this needs to work against
+      placeholder: Cisco IOS-XE, FortiOS, ArubaOS-CX, Meraki, PAN-OS
+    validations:
+      required: false
+  - type: checkboxes
+    id: labcheck
+    attributes:
+      label: Lab reality check
+      description: Everything here has to be reproducible in a home lab, so viewers can run it themselves.
+      options:
+        - label: I think this could be demonstrated in a CML Free lab or on a Windows or Linux endpoint, without licensed vendor hardware.
+          required: false

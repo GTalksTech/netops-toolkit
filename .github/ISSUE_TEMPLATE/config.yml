@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Setup help
+    url: https://github.com/GTalksTech/netops-toolkit/tree/main/getting-started
+    about: Lab and Python environment setup from scratch. Worth a look before filing a bug.
+  - name: Question about a walkthrough
+    url: https://www.youtube.com/@GTalksTechOfficial
+    about: Comments on the companion video are usually the fastest way to get an answer about a demo.
+  - name: Anything you would rather not post publicly
+    url: https://gtalkstech.com
+    about: Email garrett@gtalkstech.com instead.

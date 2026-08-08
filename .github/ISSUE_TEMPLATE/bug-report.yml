@@ -1,0 +1,69 @@
+name: Bug report
+description: A script, prompt, or lab template does not work as written.
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting this. The more of the below you fill in, the faster it gets fixed.
+
+        This is a public repo. Before you paste anything from your own environment,
+        scrub hostnames, IP addressing, serial numbers, credentials, and any customer
+        or employer names. Lab output from the CML topology that ships here is fine
+        as-is, since those IPs and hostnames are already public by design.
+  - type: dropdown
+    id: artifact
+    attributes:
+      label: Which artifact
+      description: Where does the problem live?
+      options:
+        - ai-prompts/prompt-engineering-network-engineers
+        - scripts/netmiko/mcp-network-assistant
+        - scripts/netmiko/ai-network-documentation
+        - scripts/netmiko/api-automation-pipeline
+        - scripts/netmiko/ai-network-agents
+        - scripts/netmiko/quickstart-scripts
+        - scripts/powershell
+        - incident-response/templates
+        - getting-started
+        - runbooks
+        - Something else, or not sure
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What you ran and what came back
+      description: The command you ran and the output or error, as close to verbatim as you can get it.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected instead
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Fill in whatever applies. Delete the rest.
+      value: |
+        - OS:
+        - Python version:
+        - Netmiko version:
+        - CML version:
+        - Device platform and image:
+    validations:
+      required: false
+  - type: checkboxes
+    id: prechecks
+    attributes:
+      label: Before filing
+      options:
+        - label: I read the artifact's own README, including its prereqs and documented limitations.
+          required: false
+        - label: I am running against the CML topology this artifact ships with, or I have described above how my environment differs.
+          required: false

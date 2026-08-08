@@ -115,4 +115,11 @@ All content here is for educational purposes. Templates and scripts are starting
 
 ## Contributing
 
-This is a solo project. If you spot a bug, a vendor adaptation that does not work as written, or a prompt you would use weekly that should be in the next pack release, open an issue or email garrett@gtalkstech.com.
+This is a solo project, but issues are open and I read all of them.
+
+- [Report a bug](https://github.com/GTalksTech/netops-toolkit/issues/new?template=bug-report.yml) if a script, prompt, or lab template does not work as written, or a vendor adaptation fails.
+- [Request a workflow or artifact](https://github.com/GTalksTech/netops-toolkit/issues/new?template=workflow-request.yml) if there is something you do by hand every week that belongs here. Requests grounded in a real task are the ones that turn into videos.
+
+Prefer email, or have something you would rather not post in public? garrett@gtalkstech.com.
+
+One ask: this is a public repo, so scrub your own hostnames, IP addressing, serials, credentials, and customer or employer names before pasting output. Lab output from the CML topologies here is already public by design, so that needs no redaction.
