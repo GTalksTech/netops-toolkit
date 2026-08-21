@@ -43,7 +43,7 @@ Curated AI prompt packs for network engineering work. Every prompt is built on t
 
 Run AI models on your own hardware and do real network engineering work with them, with zero device data leaving the machine.
 
-- [local-ai-network-engineers](local-ai/local-ai-network-engineers/) · Dual-platform (macOS + Windows) quickstart runbook built around four silent failures of local model tooling, a local-model prompt pack, real lab config captures as demo inputs, and three working scripts: structured extraction with Pydantic, a sampling A/B harness, and a read-only MCP server for driving network tools from a local model. Every number measured live.
+- [local-ai-network-engineers](local-ai/local-ai-network-engineers/) · Dual-platform (macOS + Windows) quickstart runbook built around four silent failures of local model tooling, a local-model prompt pack, real lab config captures as demo inputs, and three working scripts: structured extraction with Pydantic, a sampling A/B harness, and a read-only MCP server for driving network tools from a local model. Every number measured live. ([video](https://youtu.be/dDE8gajTKkQ) · [write-up](https://gtalkstech.com/blog/local-ai-network-engineers/))
 
 ### scripts/netmiko
 

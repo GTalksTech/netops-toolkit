@@ -4,7 +4,7 @@ Run a local AI model on hardware you own and do real network engineering work
 with it -- documentation from configs, structured extraction, config audits --
 with zero device data leaving the machine.
 
-> **Companion video:** VIDEO_URL_PLACEHOLDER (swapped at publish)
+> **Companion video:** [Stop Redacting Configs for ChatGPT. Run the Model Locally Instead.](https://youtu.be/dDE8gajTKkQ)
 >
 > **Mailing list:** [join.gtalkstech.com](https://join.gtalkstech.com) -- the
 > prompt pack is also delivered there, plus release emails when artifacts ship.
