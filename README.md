@@ -7,6 +7,7 @@ Built and maintained by [Garrett Masters](https://gtalkstech.com) of **G Talks T
 ```
 $ ls ./netops-toolkit
 ai-prompts/          tested AI prompt packs for network engineering work
+local-ai/            run AI models on your own hardware; private by measurement
 scripts/netmiko/     SSH-to-artifact pipelines + a custom MCP server
 scripts/powershell/  network evidence collection on Windows endpoints
 incident-response/   comms templates for "the network is down"
@@ -37,6 +38,12 @@ Organized by what the artifact does, not by which video shipped it. Each entry l
 Curated AI prompt packs for network engineering work. Every prompt is built on the same 4-piece structure (Role / Context / Constraint / Output Format) and carries a Public-safe or Enterprise-only safety label so you know whether it's safe to run on free-tier AI.
 
 - [The Network Engineer's AI Prompt Pack](ai-prompts/prompt-engineering-network-engineers/) · 15 prompts across config generation, troubleshooting, documentation, compliance, and code generation. Multi-vendor adaptation notes for Cisco IOS-XE, Arista EOS, Junos, ArubaOS-CX, FortiOS, and PAN-OS. ([video](https://youtu.be/OEfeS8pyn_s) · [write-up](https://gtalkstech.com/blog/prompt-engineering-for-network-engineers/))
+
+### local-ai
+
+Run AI models on your own hardware and do real network engineering work with them, with zero device data leaving the machine.
+
+- [local-ai-network-engineers](local-ai/local-ai-network-engineers/) · Dual-platform (macOS + Windows) quickstart runbook built around four silent failures of local model tooling, a local-model prompt pack, real lab config captures as demo inputs, and three working scripts: structured extraction with Pydantic, a sampling A/B harness, and a read-only MCP server for driving network tools from a local model. Every number measured live.
 
 ### scripts/netmiko
 
