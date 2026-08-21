@@ -21,6 +21,7 @@ with zero device data leaving the machine.
 | `structured-output-test.py` | The `format=` + Pydantic structured extraction pattern, including the think=false fix. |
 | `netops-mcp-server.py` | Minimal read-only MCP server (ping + parse cached configs) for driving real tools from a local model behind a confirmation dialog. |
 | `requirements.txt` | The two pip packages the optional scripts need. |
+| `cml-topology.yaml` | Optional: the CML lab the config captures came from (two IOL routers + one IOL-L2 switch). Only needed if you want to replicate the live-ping MCP demo against real devices; everything else runs from the cached captures. |
 
 ## Quick start (no lab required)
 
