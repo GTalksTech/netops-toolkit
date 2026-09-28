@@ -59,7 +59,7 @@ Production-shaped Netmiko scripts that go from SSH to a finished artifact. Each 
 
 PowerShell scripts for network evidence collection and triage on Windows endpoints.
 
-- `Get-NetworkEvidence.ps1` · One-shot evidence collector. Captures DNS, ARP, route table, ping, traceroute, and TCP socket state in a single bundle ready to paste into a ticket.
+- [`Get-NetworkEvidence.ps1`](scripts/powershell/Get-NetworkEvidence.ps1) · Three-layer triage check for one target: DNS, the TCP port (443 by default), and the status code the app returns to an HTTPS HEAD request. Each layer prints PASS or FAIL (the app check can also print WARN or ERROR), it stops at the first DNS or port failure, and the output is meant to be pasted straight into your ticket. With no arguments it targets httpbin.org/status/500, a test page that always returns a server error, so you see the network pass and the app fail. Needs Windows and PowerShell 7 or later. ([video](https://youtu.be/kdyXSark_ck) · [write-up](https://gtalkstech.com/blog/its-not-the-network/))
 
 ### incident-response
 
