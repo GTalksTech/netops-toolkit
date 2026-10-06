@@ -1,0 +1,29 @@
+# Recommended end state for ~/.config/goose/permission.yaml (Goose CLI v1.49.0).
+#
+# Prefer setting these through goose configure > goose settings > tool
+# permission, which writes this file for you. Use this copy to check the result.
+# Goose rewrites the file itself, so these comments may not survive.
+#
+# Tool names are <extension name>__<tool name>. The prefix below assumes you
+# registered the extension as netops-mcp-server. `shell` is Goose's own shell
+# tool, named as it appeared in this file in our lab.
+#
+# The mode is NOT set here. It lives in ~/.config/goose/config.yaml as
+# GOOSE_MODE. Use smart_approve (what the lab ran) or approve. Never auto:
+# auto runs every tool, shell included, without asking.
+#
+# Goose may add a second top-level block, smart_approve:, on its own. In the
+# lab it only ever held "ask before" entries. Your rules are the user: block,
+# and Goose checks them first.
+
+user:
+  always_allow:
+  - netops-mcp-server__list_interfaces
+  - netops-mcp-server__ping_host
+  - netops-mcp-server__show_interfaces_live
+  # Optional: - todo__todo_write  (the agent's own checklist; two of the three
+  # dialogs on our first approve-mode task were this tool)
+  ask_before:
+  - netops-mcp-server__set_interface_description
+  never_allow:
+  - shell

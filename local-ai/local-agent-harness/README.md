@@ -1,188 +1,189 @@
-# Local Agent Harness: Follow Along
+# Local Agent Harness: One Write Tool, Two Harnesses
 
-Stand up an AI agent harness on hardware you own, point it at a local model,
-and wire it to real network tools through MCP. No cloud API, no device data
-leaving the machine.
+An MCP server with three read tools and one write tool, wired into two agent
+harnesses running on local models: Goose (CLI) on Ollama, and Bionic. The
+point is not the model. The point is what sits between an agent and your
+network gear, and which parts of that you have to build and set yourself.
 
-> ### Read this first: results are not in yet
+> **Companion video:** link lands here when it publishes.
 >
-> This is a **follow-along**, not a finished runbook. It is the setup path and
-> the open questions for a video that has not been recorded. Every step below
-> is either a verified command or a clearly-labeled thing we are about to test.
->
-> **The central question is genuinely unanswered:** we do not yet know whether
-> a local model is reliable enough to drive tools. If it turns out it is not,
-> that is the finding and we will publish it that way.
->
-> Nothing here claims a working harness. When the lab settles it, this folder
-> gets the real runbook with measured numbers.
+> **Mailing list:** [join.gtalkstech.com](https://join.gtalkstech.com)
 
-> **Mailing list:** [join.gtalkstech.com](https://join.gtalkstech.com) -- the
-> finished runbook ships there first.
+This replaces the pre-lab follow-along that lived here. The lab is done, the
+numbers below are measured, and the corrections to the pre-lab version are
+listed at the bottom.
+
+## What's in this folder
+
+| File | What it is |
+|---|---|
+| [quickstart-goose-ollama.md](quickstart-goose-ollama.md) | The main runbook. Goose driving this server on Ollama, including the two setup traps, the per-tool rule set, and the credential path. Pre-check, Action, Post-check, Rollback. |
+| [quickstart-bionic.md](quickstart-bionic.md) | The shorter Bionic runbook: install, the MCP registration form, and why to give it read tools only. |
+| [permission.yaml.example](permission.yaml.example) | The recommended end-state Goose permission file: reads always allowed, the write asks first, shell never allowed. |
+| [mcp-hygiene-checklist.md](mcp-hygiene-checklist.md) | One page, ten checks before any MCP server gets read or write access to network gear. |
+| [netops-mcp-server.py](netops-mcp-server.py) | The MCP server (FastMCP + Netmiko, stdio). Four tools, described below. |
+| [requirements.txt](requirements.txt) | The server's two packages, with FastMCP pinned to the tested version. |
+| `core-rtr-01.cfg`, `edge-rtr-01.cfg`, `access-sw-01.cfg` | Cached `show run all` captures the `list_interfaces` tool reads. They must sit in the same folder as the server. |
+
+## The four tools
+
+| Tool | Reads or writes | What it does |
+|---|---|---|
+| `list_interfaces` | Read, cached | Parses a saved config file. Returns every interface, flags the ones with no IP address or shut down, and prints the config's own "Last configuration change" stamp so the answer says how old it is. |
+| `show_interfaces_live` | Read, live | SSHes to the device and returns `show ip interface brief`. |
+| `ping_host` | Read, live | Pings a host twice from the machine running the server. |
+| `set_interface_description` | **Write** | Sets or removes the description on one interface, in running-config only (never saved to startup), and returns the interface config before and after. Annotated honestly as not read-only. |
+
+The server only accepts three device names: core-rtr-01, edge-rtr-01 and
+access-sw-01. Anything else gets refused before a connection is attempted.
+
+The cached tool and the live tool are split on purpose. Ask the same question
+both ways and any difference between them is config drift. In our lab the
+live router had drifted from the capture, and that is exactly what the agent
+had to notice.
+
+## Topology
+
+The same three-device CML lab used across the G Talks Tech kits: two IOL
+routers and one IOL-L2 switch, with an External Connector bridged to the host
+network. The topology file is in the sibling kit:
+[`../local-ai-network-engineers/cml-topology.yaml`](../local-ai-network-engineers/cml-topology.yaml).
+It carries the topology, not device configs, so the nodes boot blank. Give
+them the management addresses below, a local `admin` user, and SSH.
+
+| Device | Management IP | Notes |
+|---|---|---|
+| core-rtr-01 | 192.168.1.250 | LAN side, reached directly |
+| access-sw-01 | 192.168.1.251 | LAN side, reached directly |
+| edge-rtr-01 | 10.0.0.2 | Loopback, reached by routing through core-rtr-01. Your machine needs a route to 10.0.0.2 via 192.168.1.250. Every check in the runbooks uses core-rtr-01, so you can skip edge-rtr-01. |
+
+Credentials: `admin` / `cisco123`. These are real lab credentials for a
+publicly replicable topology, published on purpose. The server reads them from
+the `NETOPS_USER` and `NETOPS_PASS` environment variables and falls back to
+these defaults, so against this lab you set nothing.
+
+No lab? `list_interfaces` works from the cached files alone. The other three
+tools need the devices.
 
 ## Prereqs
 
-- [Ollama](https://ollama.com) with at least one tool-capable model pulled
-- A machine with enough RAM to hold the model plus a real KV cache. Tool
-  loops use far more context than a single-shot prompt does.
-- Optional, for the tool half: the read-only MCP server from the previous
-  episode's kit, in
-  [`local-ai/local-ai-network-engineers/`](../local-ai-network-engineers/).
-  It exposes two tools, one live ping and one cached config parse, and it is
-  read-only by design.
+- A machine that can run a local model with tool calling. Everything here was
+  run on a MacBook Pro M3 Max with 64 GB of unified memory.
+- [Ollama](https://ollama.com) with the context window set to 65536 (Goose
+  path) or [Bionic](https://lmstudio.ai/docs/bionic) (Bionic path).
+- Python 3.10+ in a virtual environment with `fastmcp` and `netmiko`:
+  ```bash
+  python3 -m venv ~/venvs/netauto
+  ~/venvs/netauto/bin/pip install -r requirements.txt
+  ```
+- The server file and its three `.cfg` files together in one folder. The
+  server finds the configs next to itself, not in your working directory.
+- macOS or Linux. `ping_host` uses Unix `ping` flags.
+- Network reach from that machine to 192.168.1.0/24 and to 10.0.0.2, for the
+  live tools.
 
-## Step one: install Goose
+## Run it under Goose (CLI)
 
-```bash
-curl -fsSL https://github.com/aaif-goose/goose/releases/download/stable/download_cli.sh | bash
-```
+Full steps in [quickstart-goose-ollama.md](quickstart-goose-ollama.md). The
+short version:
 
-Then check what you got:
+1. Install the Goose CLI and walk its setup wizard to Ollama with
+   `qwen3.8:latest`.
+2. Add the server as a command-line extension. Give the wizard the WHOLE
+   command line (interpreter plus script path). It splits what you type into
+   the command and its arguments, so an interpreter alone leaves `args:`
+   empty.
+3. Goose ships in `auto` mode, which never asks before running a tool. Change
+   the mode before the agent touches anything, and set a rule per tool (see
+   [permission.yaml.example](permission.yaml.example)).
+4. `export GOOSE_CONTEXT_LIMIT=65536` so Goose and Ollama agree on the window.
 
-```bash
-goose --version
-```
+## Run it under Bionic
 
-**Use v1.49.0 or newer.** Version matters more than usual here, because the
-approval behavior has moved three times in six weeks:
+Full steps in [quickstart-bionic.md](quickstart-bionic.md). Register the
+server through Settings > Integrations > MCP > Custom MCP, connection "On this
+computer", and let Bionic start it for you. Give Bionic a read-only copy of
+the server; the section below says why.
 
-| Version | Date | What changed that matters |
-|---|---|---|
-| v1.46.0 | 2026-08-12 | Fixes silent empty-turn termination ([#10353](https://github.com/aaif-goose/goose/issues/10353)). Below this, a run can stop with no error at all. |
-| v1.48.0 | 2026-08-27 | Permission denies take precedence ([#11477](https://github.com/aaif-goose/goose/pull/11477)). A persisted deny now beats a conflicting allow. |
-| v1.49.0 | 2026-09-03 | Shows tool inputs before approval ([#10932](https://github.com/aaif-goose/goose/issues/10932)) and enforces per-turn model tool allowlists ([#11426](https://github.com/aaif-goose/goose/issues/11426)). |
+## Tested versions
 
-That last one is worth pausing on. Seeing the arguments before you approve is
-the difference between approving "it wants to run a tool" and approving "it
-wants to run this, with these values."
+| Component | Version |
+|---|---|
+| Goose CLI | v1.49.0 |
+| Bionic | 1.1.6 |
+| Model | `qwen3.8:latest`, digest `22130167c4c2` (Q4_K_M, 27.3B). The `latest` tag moves; check the digest with `ollama list`. |
+| Ollama | 0.33.3 |
+| FastMCP | 3.4.5 |
+| OS | macOS, MacBook Pro M3 Max, 64 GB |
 
-## Step two: point it at Ollama
+Both harnesses release often. As of 2026-10-06 the current releases are Goose
+v1.53.0, Bionic 1.1.7 and Ollama 0.40.0, and we have not re-tested on them.
+Behavior described here is for the versions in the table. The server itself
+was also run on Linux (Ubuntu, Python 3.12): the MCP handshake and all three
+read tools worked against the live lab.
 
-```bash
-export GOOSE_PROVIDER=ollama
-export GOOSE_MODEL=<your-model>
-```
+## What the approval gate does and does not check
 
-**Set your context window before you do anything else.** Ollama's default
-context is small enough to silently truncate a real tool loop, and the failure
-does not announce itself. There is a long-running report of exactly this
-against Goose ([#1253](https://github.com/aaif-goose/goose/issues/1253)). The
-Ollama server log is where the truncation line shows up.
+**Goose v1.49.0.** In `smart_approve` mode, Goose checks your own per-tool
+rule first. If you have not set one, it checks the tool's `readOnlyHint`
+annotation. If there is no annotation to go on, it asks the local model to
+judge. None of those steps looks at what the tool actually does to a device.
+So set your own rule for every tool, and read the servers you install,
+because a label is taken at its word.
 
-The environment block that fixes this, with the reasoning behind each setting,
-is in the previous kit's
-[quickstart runbook](../local-ai-network-engineers/local-ai-quickstart-runbook.md),
-sections one and two.
+In `auto` mode, the shipped default, none of that applies. Our write tool
+carried its honest label and still ran with no approval step. (That run used
+`goose run`, not an interactive session, and we did not test a `user:`
+ask-before rule while in auto.)
 
-## Step three: find out where your config actually lives
+**Bionic 1.1.6.** The composer's command-approval menu covers shell commands.
+We found no MCP approval setting in the app, and our MCP write ran with no
+prompt in every mode we tried: Auto Review, Ask every time, and Off. So give Bionic read tools only, and put
+any write behind a harness where you have set a rule for it.
 
-Before you configure anything, look:
+## What actually protected the lab
 
-```bash
-ls -la ~/.config/goose/
-cat ~/.config/goose/*.yaml
-```
+Three things, all built or set by hand:
 
-**This is an open question, not an instruction.** The documentation describes
-configuration living in `config.yaml`. There is a report
-([#5196](https://github.com/aaif-goose/goose/issues/5196)) that permissions
-actually live in a separate `permission.yaml` and secrets in `secrets.yaml`,
-and that people who follow the docs end up with permission rules that silently
-do nothing.
+1. **Tool output that is complete and timestamped.** When `list_interfaces`
+   left out interfaces with no IP address, the model got one interface right
+   two times out of five. Once the tool returned every interface with the
+   capture date, it got it right three times out of three (one of those runs
+   already had the answer in context) and flagged the capture as stale on its
+   own.
+2. **An honest label plus your own rule.** The write tool says it writes, and
+   a per-tool rule makes the harness ask before it runs.
+3. **No write tools where nothing gates them.**
 
-We have not confirmed this on disk yet. That is one of the things this lab
-session is for. If you run it before we do, your file listing is the answer,
-and we would genuinely like to hear what you got.
+The model was the dependable part: no malformed tool call in any run, and a
+clean stop when a write was denied. Where it slipped was judgment. It gave
+confident causes with no evidence under them. Verify anything it tells you
+about a device against the device.
 
-## Step four: wire a tool server
+## Known limits
 
-Register an MCP server as an extension in your Goose config, over stdio.
+- `ping_host` uses Unix `ping` flags. On Linux, `-W` is in seconds rather than
+  milliseconds, so a host that silently drops pings makes the tool fail at its
+  15-second timeout instead of returning ping's own output.
+- The write tool only sets or removes interface descriptions, and only on the
+  three named devices. It is a demonstration of a gated write, not a config
+  tool.
 
-If you want a network-shaped one that cannot hurt anything, use
-[`netops-mcp-server.py`](../local-ai-network-engineers/netops-mcp-server.py)
-from the previous kit. Two tools, read-only, and one of them runs against
-cached captures so you can follow along with no lab at all.
+## Corrections to the pre-lab version of this page
 
-Then set the mode that makes the boundary visible:
+The follow-along published here before the lab said a few things the lab
+settled differently:
 
-```bash
-export GOOSE_MODE=approve
-```
-
-Confirm the prompt fires **before** each tool call, not after. That ordering is
-the whole point.
-
-## Step five: look hard at the boundary
-
-This is what the video is actually about, so here is what to watch rather than
-what to conclude.
-
-**Set an explicit rule, then try to get around it.** There is a report
-([#11017](https://github.com/aaif-goose/goose/issues/11017)) that in
-`smart_approve` mode, the classifier deciding whether a command is safe can run
-past an explicit user-configured ask rule. The reporter allowed two read-only
-git commands, set ask-on-everything-else, and watched a third command run with
-no prompt because the classifier judged it harmless. It was closed as not-a-bug
-on 2026-08-11.
-
-Whether it still reproduces on current versions is one of the things we are
-testing. Try it yourself and see. A permission prompt is a seatbelt, not a law
-of physics, and the interesting question is always what the gate is made of.
-
-## The comparison: LM Studio's Bionic
-
-Bionic is worth setting up next to Goose, because the two gates are built
-differently.
-
-- Bionic **does** support MCP. Confirmed against
-  [LM Studio's MCP documentation](https://lmstudio.ai/docs/app/mcp) and
-  [Cloudflare's Bionic agent setup page](https://developers.cloudflare.com/agent-setup/bionic/).
-  It shows a confirmation dialog before a tool call runs, with per-tool
-  whitelisting.
-- As of **1.1.0** (2026-08-27) it has a named four-mode shell approval
-  spectrum: disabled, manual review, auto review, and allow-all, with
-  persistent preferences. Current release is **1.1.1** (2026-08-31), which is
-  interface and performance work and does not change the approval mechanics.
-
-One honest note about pace: Bionic shipped three times in under two weeks while
-this page was being prepared. Check the version you actually have before
-trusting anything written about it, including this page.
-
-## Known rough edges
-
-Real, filed, and worth knowing before you blame your own setup:
-
-- [#1253](https://github.com/aaif-goose/goose/issues/1253) -- Ollama context truncation, silent
-- [#10353](https://github.com/aaif-goose/goose/issues/10353) -- empty-turn termination, fixed in v1.46.0 and later
-- [#8272](https://github.com/aaif-goose/goose/issues/8272) -- tool-call JSON parse failures
-- [#8275](https://github.com/aaif-goose/goose/issues/8275) -- toolshim interpreter no-op
-- [#6883](https://github.com/aaif-goose/goose/issues/6883) -- some models abandon JSON and emit XML-style tags once the registered tool count climbs
-
-## Security
-
-One published advisory as of today:
-[GHSA-r5pp-p5r8-466r](https://github.com/aaif-goose/goose/security/advisories)
-(High, 2026-07-24), arbitrary command execution in `goose review` through git
-`core.fsmonitor`. That is the only one. If you see a CVE number attached to this
-project somewhere, check it against the repository's own advisory page before
-repeating it.
-
-## What we do not know yet
-
-Stated plainly, because this is the part most write-ups skip:
-
-- **Whether a local model in this class drives tools reliably enough to trust.**
-  Unmeasured. Published tool-calling benchmarks measure older model
-  generations, so we are not repeating their numbers as though they were ours.
-- **Where permissions actually live on disk.** See step three.
-- **Whether the classifier still walks past explicit rules.** See step five.
-- **What each approval gate is actually made of**, once two of them sit side by
-  side against the same tools.
-
-Answers, with measurements, when the lab is done.
+- **Bionic and MCP tool calls.** It said Bionic shows a confirmation dialog
+  before a tool call runs. That dialog is documented for classic LM Studio. In
+  Bionic 1.1.6 we saw no MCP confirmation in any approval mode.
+- **Where Goose keeps permissions.** It asked whether rules live in a separate
+  `permission.yaml`. They do: `~/.config/goose/permission.yaml`, which does not
+  exist until you set your first rule. The Goose docs list it.
+- **Whether the smart_approve judgment can override your rule.** It cannot.
+  Your own rule is checked first, and the lab confirmed it.
 
 ---
 
 *Part of [netops-toolkit](https://github.com/GTalksTech/netops-toolkit) from
-[G Talks Tech](https://www.youtube.com/@GTalksTechOfficial). The companion
-video link lands here when it publishes.*
+[G Talks Tech](https://www.youtube.com/@GTalksTechOfficial).*
