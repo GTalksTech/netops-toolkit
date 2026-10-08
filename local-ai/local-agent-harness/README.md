@@ -5,7 +5,9 @@ harnesses running on local models: Goose (CLI) on Ollama, and Bionic. The
 point is not the model. The point is what sits between an agent and your
 network gear, and which parts of that you have to build and set yourself.
 
-> **Companion video:** link lands here when it publishes.
+> **Companion video:** [Before You Let an AI Agent Touch Your Network, Set These 3 Guardrails](https://youtu.be/dsY4_s3NL04)
+>
+> **Write-up:** [A Local AI Agent on a Real Router: The Three Guardrails That Held](https://gtalkstech.com/blog/local-agent-harness/)
 >
 > **Mailing list:** [join.gtalkstech.com](https://join.gtalkstech.com)
 
